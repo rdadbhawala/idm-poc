@@ -23,3 +23,5 @@
 hs_err_pid*
 /Web1/target
 /Web2/target
+/Web1/bin
+/Web2/bin
