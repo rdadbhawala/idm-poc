@@ -4,14 +4,13 @@
 
 <web-app>
   <display-name>Web1</display-name>
-
 	<servlet>
-		<servlet-name>UserServlet</servlet-name>
-		<servlet-class>UserServlet</servlet-class>
+		<servlet-name>IdmServlet</servlet-name>
+		<servlet-class>IdmServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
-		<url-pattern>/UserServlet</url-pattern>
+		<servlet-name>IdmServlet</servlet-name>
+		<url-pattern>/idm</url-pattern>
 	</servlet-mapping>
 
 	<filter>
@@ -20,6 +19,6 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>IAuthFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/pages</url-pattern>
 	</filter-mapping>
 </web-app>
