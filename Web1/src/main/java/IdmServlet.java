@@ -15,17 +15,17 @@ public class IdmServlet extends HttpServlet implements IdmServletConstants {
         String action = req.getParameter(prmAction);
         try {
             switch (action) {
-                case actLogin:
-                    this.doLogin(req, resp);
-                    break;
-                case actLogout:
-                    this.doLogout(req, resp);
-                    break;
-                case actVerify:
-                    this.doVerify(req, resp);
-                    break;
-                default:
-                    throw new RuntimeException("Unknown Action");
+            case actLogin:
+                this.doLogin(req, resp);
+                break;
+            case actLogout:
+                this.doLogout(req, resp);
+                break;
+            case actVerify:
+                this.doVerify(req, resp);
+                break;
+            default:
+                throw new RuntimeException("Unknown Action");
             }
             resp.getWriter().println("SUCCESS");
         } catch (Exception exc) {

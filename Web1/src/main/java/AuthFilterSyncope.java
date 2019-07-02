@@ -5,21 +5,15 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-// import org.apache.syncope.client.lib.BasicAuthenticationHandler;
-// import org.apache.syncope.client.lib.SyncopeClient;
-// import org.apache.syncope.client.lib.SyncopeClientFactoryBean;
-// import org.apache.syncope.client.lib.SyncopeClientFactoryBean.ContentType;
-// import org.apache.syncope.common.lib.to.PagedResult;
-// import org.apache.syncope.common.lib.to.UserTO;
-// import org.apache.syncope.common.rest.api.beans.AnyQuery;
-// import org.apache.syncope.common.rest.api.service.UserService;
-
 public class AuthFilterSyncope implements IAuthFilter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         System.out.println("AuthFilterSyncope::doFilter" + (new java.util.Date().toString()));
+
+        
+
         // getClient("bwt-test1", "bwt-test1");
         // getClient("bwt-test2", "bwt-test1");
         // getClient("admin", "password");
