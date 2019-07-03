@@ -1,4 +1,10 @@
+import java.util.List;
+
+import javax.ws.rs.core.Response;
+
 import org.apache.syncope.client.lib.SyncopeClientFactoryBean;
+import org.apache.syncope.common.lib.to.UserTO;
+import org.apache.syncope.common.rest.api.service.UserSelfService;
 
 public class IdmActionsSyncope implements IdmActions
 {
@@ -23,10 +29,12 @@ public class IdmActionsSyncope implements IdmActions
     }
 
     @Override
-    public void verify(String jwt) {
-        new SyncopeClientFactoryBean().
+    public List<String> verify(String jwt) {
+        Response r = new SyncopeClientFactoryBean().
             setAddress(address).
             create(jwt).
-            refresh();
+            getService(UserSelfService.class).read();
+        UserTO u = r.readEntity(UserTO.class);
+        return u.getRoles();
     }
 }
