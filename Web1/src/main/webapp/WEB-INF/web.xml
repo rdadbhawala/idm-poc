@@ -19,6 +19,6 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>IAuthFilter</filter-name>
-		<url-pattern>/pages</url-pattern>
+		<url-pattern>/pages/*</url-pattern>
 	</filter-mapping>
 </web-app>

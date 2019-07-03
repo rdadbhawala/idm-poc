@@ -26,6 +26,7 @@ public class IdmActionsSyncope implements IdmActions
     public void verify(String jwt) {
         new SyncopeClientFactoryBean().
             setAddress(address).
-            create(jwt);
+            create(jwt).
+            refresh();
     }
 }
