@@ -47,8 +47,9 @@ public class IdmServlet extends HttpServlet implements IdmServletConstants {
         Cookie found = getAuthCookie(req);
         if (found != null) {
             new IdmActionsSyncope().logout(found.getValue());
-            found.setValue(null);
-            resp.addCookie(found);
+            Cookie c = new Cookie(IdmServletConstants.hdrToken, "");
+            c.setPath(req.getContextPath());
+            resp.addCookie(c);
         }
     }
 
