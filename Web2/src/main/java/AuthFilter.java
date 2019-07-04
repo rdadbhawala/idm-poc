@@ -18,7 +18,24 @@ public class AuthFilter
             throws IOException, ServletException {
         Cookie found = getAuthCookie(req.getCookies());
         if (found != null) {
-            super.doFilter(req, res, chain);
+            List<String> roles = new IdmActionsSyncope().verify(found.getValue());
+
+            // this map can be based on a config file containing mappings
+            String expectedRole = null;
+            switch (req.getServletPath()) {
+                case "/pages/user.jsp":
+                    expectedRole = "BWT_User";
+                    break;
+                case "/pages/support.jsp":
+                    expectedRole = "BWT_Support";
+                    break;
+            }
+            if (expectedRole != null && roles.contains(expectedRole)) {
+                super.doFilter(req, res, chain);
+            } else {
+                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                res.getWriter().write("Unauthorized");
+            }
         } else {
             res.setHeader(IAuthConstants.hdrContextPath, req.getContextPath());
             res.sendRedirect(IAuthConstants.urlUsersIdm + req.getContextPath() + req.getServletPath());

@@ -4,4 +4,12 @@
 
 <web-app>
   <display-name>Users</display-name>
+	<servlet>
+		<servlet-name>IdmServlet</servlet-name>
+		<servlet-class>IdmServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>IdmServlet</servlet-name>
+		<url-pattern>/idm/*</url-pattern>
+	</servlet-mapping>
 </web-app>
