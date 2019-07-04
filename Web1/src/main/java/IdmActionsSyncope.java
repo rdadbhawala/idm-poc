@@ -1,6 +1,7 @@
 import java.util.List;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.syncope.client.lib.SyncopeClientFactoryBean;
 import org.apache.syncope.common.lib.to.UserTO;
@@ -33,8 +34,12 @@ public class IdmActionsSyncope implements IdmActions
         Response r = new SyncopeClientFactoryBean().
             setAddress(address).
             create(jwt).
-            getService(UserSelfService.class).read();
-        UserTO u = r.readEntity(UserTO.class);
-        return u.getRoles();
+            getService(UserSelfService.class).
+            read();
+        if (r.getStatus() == Status.OK.getStatusCode()) {
+            return r.readEntity(UserTO.class).getRoles();
+        } else {
+            throw new RuntimeException("Token Invalid");
+        }
     }
 }

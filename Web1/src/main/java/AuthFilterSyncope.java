@@ -17,7 +17,7 @@ public class AuthFilterSyncope
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
         System.out.println("doFilter");
-        Cookie found = getAuthCookie(req);
+        Cookie found = getAuthCookie(req.getCookies());
         if (found != null) {
             System.out.println("Cookie Value: " + found.getValue());
             List<String> roles = new IdmActionsSyncope().verify(found.getValue());
@@ -28,17 +28,31 @@ public class AuthFilterSyncope
             System.out.println("Context Path  : " + req.getContextPath());
             System.out.println("Servlet Path  : " + req.getServletPath());
             System.out.println("Path Transated: " + req.getPathTranslated());
-            super.doFilter(req, res, chain);
+
+            String expectedRole = null;
+            switch (req.getServletPath()) {
+                case "/pages/user.jsp":
+                    expectedRole = "BWT_User";
+                    break;
+                case "/pages/support.jsp":
+                    expectedRole = "BWT_Support";
+                    break;
+            }
+            if (expectedRole != null && roles.contains(expectedRole)) {
+                super.doFilter(req, res, chain);
+            } else {
+                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                res.getWriter().write("Unauthorized");
+            }
         } else {
-            res.getWriter().write("IDM FAILURE");
+            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            res.getWriter().write("Invalid Token");
         }
     }
 
-    private Cookie getAuthCookie(HttpServletRequest req) {
-        Cookie[] cs = req.getCookies();
+    private Cookie getAuthCookie(Cookie[] cs) {
         Cookie found = null;
-        int cookieCtr = 0;
-        for (; cookieCtr < cs.length; cookieCtr++) {
+        for (int cookieCtr = 0; cookieCtr < cs.length; cookieCtr++) {
             Cookie c = cs[cookieCtr];
             if (IdmServletConstants.hdrToken.equals(c.getName())) {
                 found = c;
