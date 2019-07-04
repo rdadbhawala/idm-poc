@@ -19,16 +19,9 @@ public class AuthFilterSyncope
         System.out.println("doFilter");
         Cookie found = getAuthCookie(req.getCookies());
         if (found != null) {
-            System.out.println("Cookie Value: " + found.getValue());
             List<String> roles = new IdmActionsSyncope().verify(found.getValue());
-            for (String oneRole : roles) {
-                System.out.println("Role: " + oneRole);
-            }
-            System.out.println("Path Info     : " + req.getPathInfo());
-            System.out.println("Context Path  : " + req.getContextPath());
-            System.out.println("Servlet Path  : " + req.getServletPath());
-            System.out.println("Path Transated: " + req.getPathTranslated());
 
+            // this map can be based on a config file containing mappings
             String expectedRole = null;
             switch (req.getServletPath()) {
                 case "/pages/user.jsp":
