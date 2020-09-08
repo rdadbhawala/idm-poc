@@ -80,7 +80,7 @@ public class IdmServlet extends HttpServlet implements IdmServletConstants {
         if (cs != null && cs.length > 0) {
             for (int cookieCtr = 0; cookieCtr < cs.length; cookieCtr++) {
                 Cookie c = cs[cookieCtr];
-                if (IdmServletConstants.hdrToken.equals(c.getName())) {
+                if (IdmServletConstants.hdrToken.equals(c.getName()) && c.getValue() != null && !"".equals(c.getValue())) {
                     found = c;
                     break;
                 }
